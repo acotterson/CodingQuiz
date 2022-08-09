@@ -47,7 +47,7 @@ function timeCalc () {
 function quizIntro () {
     placeIndex = 0;
     clearMainContainer();
-    document.querySelector("#high-scores-link").hidden = false;
+    document.querySelector("#high-scores-link").classList.remove("hidden");
     document.querySelector("#time-text").hidden = false;
     document.querySelector("#time-value").hidden = false;
 
@@ -169,7 +169,8 @@ function compare( a, b ) {
 
 function highScores(fromPlace) {
   clearMainContainer();
-  document.querySelector("#high-scores-link").hidden = true;
+  var highScoreLink = document.querySelector("#high-scores-link");
+  highScoreLink.classList.add("hidden");
   document.querySelector("#time-text").hidden = true;
   document.querySelector("#time-value").hidden = true;
 
@@ -205,14 +206,14 @@ function highScores(fromPlace) {
       quizIntro();
     }
     else if (fromPlace <= questionsList.length) {      
-      document.querySelector("#high-scores-link").hidden = false;
+      document.querySelector("#high-scores-link").classList.remove("hidden");
       document.querySelector("#time-text").hidden = false;
       document.querySelector("#time-value").hidden = false;
       intervalID = setInterval(timeCalc, 1000);
       quizQuestion(fromPlace - 1);
     }
     else {      
-      document.querySelector("#high-scores-link").hidden = false;
+      document.querySelector("#high-scores-link").classList.remove("hidden");
       document.querySelector("#time-text").hidden = false;
       document.querySelector("#time-value").hidden = false;
       enterScore();
