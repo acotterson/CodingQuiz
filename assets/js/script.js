@@ -5,6 +5,7 @@ intervalID = null;
 
 var placeIndex = 0;
 
+// set questions up and put them in a list
 const q1 = {
   question: "Commonly use data types DO NOT include: ",
   ansOptions: ['1. strings','2. booleans','3. alerts','4. numbers'],
@@ -25,6 +26,7 @@ const q3 = {
 
 var questionsList = [q1,q2,q3];
 
+// clear everything in the main container (we do this a lot)
 function clearMainContainer()
 {
     container.innerHTML = "";
@@ -34,10 +36,10 @@ function clearMainContainer()
 function timeCalc () {
   
   countdown -= 1;
-  // Display the result in the element with id="demo"
+  // Display the result in the top corner
   document.getElementById("time-value").innerHTML = countdown;
 
-  // If the count down is finished, write some text
+  // If the count down is finished, go to score screen
   if (countdown < 0) {
     clearInterval(intervalID);
     countdown = 0;
@@ -46,6 +48,7 @@ function timeCalc () {
   }
 }
 
+// display the main intro screen with the start button and high scores button
 function quizIntro () {
     placeIndex = 0;
     clearMainContainer();
@@ -73,6 +76,7 @@ function quizIntro () {
     container.appendChild(btn);
 }
 
+// display a question with multiple choice options depending on the counter to keep track of where we are
 function quizQuestion (qNumber) {
   placeIndex = qNumber + 1;
   clearMainContainer();
@@ -102,6 +106,7 @@ function quizQuestion (qNumber) {
   buttonDiv.appendChild(btn3);
   buttonDiv.appendChild(btn4);
 
+  // wrong answers subtract 10 seconds, correct answers don't, display next question or score input screen
   buttonDiv.addEventListener("click", function(event) {
     if (event.target.name === questionsList[qNumber].correct) {
       console.log('correct');
@@ -125,6 +130,7 @@ function quizQuestion (qNumber) {
   container.appendChild(buttonDiv);
 }
 
+// allow user to enter initials to pair with score and save it
 function enterScore() {
   placeIndex = questionsList.length + 1
   clearMainContainer();
@@ -142,6 +148,8 @@ function enterScore() {
   descText.innerText = ("Your final score is " + countdown + ".") ;
   btn.innerHTML = "Submit";
   btn.classList.add('button');
+
+  // save score + initials on submit button click
   btn.addEventListener("click", function() {
     scoresList = JSON.parse(localStorage.getItem('scores')) || [];
     scoresList.push({initials: document.getElementById('initials').value, time: countdown});
@@ -150,7 +158,6 @@ function enterScore() {
     highScores(placeIndex);
   });
   
-
   container.appendChild(headerText);
   container.appendChild(descText);
   container.appendChild(entryBoxLabel);  
@@ -169,6 +176,7 @@ function compare( a, b ) {
   return 0;
 }
 
+// display high scores list
 function highScores(fromPlace) {
   clearMainContainer();
   var highScoreLink = document.querySelector("#high-scores-link");
@@ -183,6 +191,7 @@ function highScores(fromPlace) {
   headerText.innerText = "Highscores";
   container.appendChild(headerText);
   
+  // load scores from local storage and parse and sort by score
   var scoresList = JSON.parse(localStorage.getItem('scores')) || [];
   scoresList.sort(compare);
   console.log(scoresList);
@@ -201,12 +210,15 @@ function highScores(fromPlace) {
     highScores();
   });
 
+  // back button goes to spot that user came from
   back.addEventListener("click", function() {
+    // from here (shouldn't be an issue) or from start page
     if (fromPlace === 0 || fromPlace === 100) {
       countdown = 0;
       document.getElementById("time-value").innerHTML = countdown;
       quizIntro();
     }
+    // from any given question
     else if (fromPlace <= questionsList.length) {      
       document.querySelector("#high-scores-link").classList.remove("hidden");
       document.querySelector("#time-text").hidden = false;
@@ -214,6 +226,7 @@ function highScores(fromPlace) {
       intervalID = setInterval(timeCalc, 1000);
       quizQuestion(fromPlace - 1);
     }
+    // from enter score page
     else {      
       document.querySelector("#high-scores-link").classList.remove("hidden");
       document.querySelector("#time-text").hidden = false;
@@ -226,10 +239,11 @@ function highScores(fromPlace) {
   container.appendChild(clearScores);
 }
 
+// button to get to high scores page
 document.querySelector("#high-scores-link").addEventListener("click", function() {  
   clearInterval(intervalID); 
   highScores(placeIndex);
 });
 
-
+// run start page on load
 quizIntro();

@@ -1,3 +1,4 @@
+/* high score button and timer */
 header {
     margin-bottom: 3em;
 }
@@ -15,17 +16,20 @@ header {
     justify-content: right;
 }
 
+/* container of main content */
 #main-container {
     text-align: center;
     margin: 0 auto;
     width: 40em;
 }
 
+/* look of buttons */
 .button {
     background-color: purple;
     color: white;
 }
 
+/* for making the high scores link disappear when on said page */
 .hidden {
     display: none !important;
 }
