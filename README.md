@@ -14,7 +14,8 @@ The scoreboard can be accessed from anywhere and will display names/initials alo
 
 ## Link and Screenshot
 
-Link to Deployed Application: https://acotterson.github.io/CodingQuiz/
+Link to Deployed Application:
+* [Coding Quiz](https://acotterson.github.io/CodingQuiz/)
 
 Screenshot:
 ![Product Screen Shot](assets/images/screenshot.png)
