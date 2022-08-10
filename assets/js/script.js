@@ -39,8 +39,10 @@ function timeCalc () {
 
   // If the count down is finished, write some text
   if (countdown < 0) {
-    clearInterval(timeCalc);    
-    enterScore(0);
+    clearInterval(intervalID);
+    countdown = 0;
+    document.getElementById("time-value").innerHTML = countdown;
+    enterScore();
   }
 }
 
